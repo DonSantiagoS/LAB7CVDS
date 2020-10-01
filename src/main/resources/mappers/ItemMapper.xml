@@ -6,6 +6,64 @@
 <mapper namespace="edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemMapper">
 
 
-    
-    
+   <select parameterType="map" id="consultarItem" resultMap="ItemResult">
+	
+	
+		select
+		
+		
+		i.id,
+		i.nombre,
+		i.descripcion,
+		i.fechalanzamiento,
+		i.tarifaxdia,
+		i.formatorenta,
+		i.genero,        
+		ti.id,
+		ti.descripcion 
+
+		
+		FROM VI_ITEMS as i
+		left join VI_TIPOITEM as ti on i.TIPOITEM_id=ti.id 
+		WHERE i.id=#{idcli};
+		
+    </select>
+	<select parameterType="map" id="consultarItems" resultMap="ItemResult">
+	
+	
+		select
+		
+		
+		i.id,
+		i.nombre,
+		i.descripcion,
+		i.fechalanzamiento,
+		i.tarifaxdia,
+		i.formatorenta,
+		i.genero,        
+		ti.id,
+		ti.descripcion 
+
+		
+		FROM VI_ITEMS as i
+		left join VI_TIPOITEM as ti on i.TIPOITEM_id=ti.id 
+		
+		
+    </select>  	
+	
+	<insert id="agregarItem" parameterType="map">
+        insert into VI_ITEMS(id,nombre,descripcion,fechalanzamiento,tarifaxdia,formatorenta,genero,TIPOITEM_id) values (#{item.id,},#{item.nombre},#{item.descripcion},#{item.fechalanzamiento},#{item.tarifaxdia},#{item.formatorenta},#{item.genero},#{item.TIPOITEM_id});
+    </insert>
+	
+	<resultMap type='Item' id 'ItemResult'>
+		<id property='id' column='id'/>
+		<result property='nombre' column 'nombre'/>
+		<result property='descripcion' column 'descripcion'/>
+		<result property='fechalanzamiento' column 'fechalanzamiento'/>
+		<result property='tarifaxdia' column 'tarifaxdia'/>
+		<result property='formatorenta' column 'formatorenta'/>
+		<result property='genero' column 'genero'/>
+		<result property='formatorenta' column 'formatorenta'/>
+		<association property="tipo" javaType="TipoItem" columnPrefix="tipoI_" resultMap="edu.eci.cvds.sampleprj.dao.mybatis.mappers.TipoItemMapper.TipoItemResult"/>
+    </resultMap>
 </mapper>
